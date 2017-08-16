@@ -1,0 +1,158 @@
+# aliases for aliases
+function reload {
+	source ~/.zshrc
+	echo ".zshrc reloaded"
+}
+
+alias bim=vim
+alias grutn=grunt
+alias grun=grunt
+alias ar=reload
+alias va='vim ~/.aliases'
+alias vrc='vim ~/.vimrc'
+alias vrz='vim ~/.zshrc'
+alias vrt='vim ~/.tmux.conf'
+
+# open curled file in vim
+function curlVim {
+	noglob curl $* | vim -
+}
+
+# grunt functions
+function GFXDependencies(){
+	for i do
+		grunt deps_specific:IG.GFX.$i:$i	
+		if [ $? -ne 0 ] ; then 
+			return $? 
+		fi
+	done
+}
+
+function buildGFX() {
+	for i do
+		grunt build:IG.GFX.$i:$i
+		if [ $? -ne 0 ] ; then 
+			return $? 
+		fi
+	done
+}
+
+function GFXDependenciesWithBuild() {
+	for i do
+		grunt deps_specific:IG.GFX.$i:$i	
+		if [ $? -ne 0 ] ; then
+			return $? 
+		fi
+	done
+	grunt debug
+}
+
+function DialogsDependencies(){
+	for i do
+		grunt deps_specific:IGD.$i:$i	
+		if [ $? -ne 0 ] ; then
+			return $? 
+		fi
+	done
+}
+
+function DialogsDependenciesWithBuild() {
+	for i do 
+		grunt deps_specific:IGD.$i:$i	
+		if [ $? -ne 0 ] ; then
+			return $? 
+		fi
+	done
+	grunt debug
+}
+
+# grunt aliases
+alias gd="grunt debug && clear"
+alias gw="grunt watch"
+alias IGd=GFXDependencies 
+alias IGdd=GFXDependenciesWithBuild 
+alias Dd=DialogsDependencies 
+alias Ddd=DialogsDependenciesWithBuild 
+
+function Ldd() {
+	grunt subgrunt:KPSonlineLib
+	grunt debug
+}
+
+function Cdd() {
+	grunt subgrunt:CISLib
+	grunt debug
+
+}
+
+function spend() {
+	systemctl suspend -i
+}
+
+# alias for switching audio output devices
+alias ah='pacmd set-card-profile 0 output:hdmi-stereo-extra1+input:analog-stereo'
+alias al='pacmd set-card-profile 0 output:analog-stereo+input:analog-stereo'
+
+# open das not always work as expected, xdg-open does
+alias open=xdg-open
+
+# curl has problems with expanding some chars, use noglob to prevent this
+alias curl='noglob curl'
+
+function editNote() {
+	geeknote find 
+	echo "Enter the id of the document you want to edit."
+	read number
+	if [ -z $number ]; then
+		let number=1
+	fi
+
+	geeknote edit $number
+}
+
+alias gn=geeknote
+
+# git aliases
+alias gs="git status"
+
+#php artian aliases
+alias art="php artisan"
+alias tinker="php artisan tinker"
+
+alias ig6="ssh root@ig6.intelligentgraphics.biz"
+
+alias toclip="xclip -sel clip"
+
+function gibd() {
+    for i do 
+        giveme build igd.$i
+    done
+}
+
+function gibg() {
+    for i do
+        giveme build ig.gfx.$i
+    done
+}
+
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias bluetoothRestart="/etc/init.d/bluetooth restart"
+
+alias productive="sudo service cron start"
+alias notproductive="sudo service cron stop"
+alias unproductive="sudo service cron stop"
+
+alias ig="cd $IGHOME"
+
+function larassh() {
+    ssh $(vagrant ssh-config | awk 'NR>1 {print " -o "$1"="$2}') localhost "cd Code/Lara; $@"
+}
+
+function endwork() {
+    kill -9 "$(pgrep -f webstorm)"
+}
+
+function nodistractions() {
+    killall -9 thunderbird
+    killall -9 Franz
+}

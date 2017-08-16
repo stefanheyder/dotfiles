@@ -1,0 +1,40 @@
+#!/usr/bin/zsh
+export MA=~/Dropbox/Uni/Masterarbeit
+
+export WS=~/Projects
+export EDITOR=vim
+
+# IG Root Dir where all IG Repos lie
+export IGHOME=$WS/IntelligentGraphics
+
+# Core IntelligentGraphics Projects
+export GFX=$IGHOME/ig.graphics.data/ig/Gfx
+export CORE=$IGHOME/ig.web.core
+export IGD=$IGHOME/ig.graphics.dialogs
+
+# KPS Ambiente Online Projects
+export KPSA=$IGHOME/kps.ambiente.online/code/08-react
+export CIS=$IGHOME/kps.ambiente.online/code/shared/cis
+export KAPI=$IGHOME/kps.ambiente.online/code/shared/api
+
+export CONSETA=$IGHOME/cor/conseta
+
+# T2 Cadops Project
+export CADOPS=$IGHOME/ig.web.t2.cadops
+
+# Bc Cafe Lara directory
+export LARA=~/Projects/homestead-lara/Code/Lara
+
+#NODEJS_HOME=/usr/lib/nodejs/node-v7.4.0
+NWJS_HOME=/usr/lib/nwjs
+COMPOSER=~/.composer/vendor/bin
+
+MYBINS=~/.local/bin:~/bin:/usr/local/bin
+
+export PATH=$NWJS_HOME:$MYBINS:$COMPOSER:$PATH
+export DOWNLOADS=~/Downloads
+export NODE_PATH=/usr/lib/nodejs/node-v7.4.0/lib
+
+export IG6="ig6.intelligentgraphics.biz"
+export IG6KPSO="/usr/share/nginx/html/kps.online/"
+
