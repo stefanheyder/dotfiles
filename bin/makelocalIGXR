@@ -1,0 +1,11 @@
+#! /bin/zsh
+
+catalogMultiJSON=$1
+
+registryName="registry.igxr.json"
+multiJSONName="local.multi.json"
+
+curl "$1" > "$multiJSONName"
+
+sed -i "s@$1@$multiJSONName@g"  "$registryName"
+

@@ -1,0 +1,9 @@
+#! /bin/zsh
+
+dumpDir=$1
+
+cat $dumpDir/* > "$LARA/longDump.sql"
+
+ssh $(vagrant ssh-config | awk 'NR>1 {print " -o "$1"="$2}') localhost "cd Code/Lara; mysql -u root -h localhost lara < longDump.sql"
+
+rm "$LARA/longDump.sql"

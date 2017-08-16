@@ -1,0 +1,67 @@
+#!/bin/zsh
+
+gfx=$(ls -F $IGHOME/ig.web.core | grep / | sed -e "s/\///g" | tr '[:upper:]' '[:lower:]')
+igd=$(ls -F $IGHOME/ig.web.dialogs | grep / | sed -e "s/\///g" | tr '[:upper:]' '[:lower:]')
+
+function build() {
+    typ=$1
+    name=$2
+
+    if [[ $typ == "dialogs" ]]; then
+        prefix="igd."
+        dir=$(ls -dF $IGHOME/ig.web.dialogs/* | grep -i "$name/")
+    else
+        prefix="ig.gfx."
+        dir=$(ls -dF $IGHOME/ig.web.core/* | grep -i "/$name/")
+    fi
+
+    if [[ ! -d "$dir/node_modules" ]]; then
+        echo "NPM dependencies were not installed in $dir, installing now"
+        npm --prefix "$dir" install "$dir"
+    fi
+
+    if giveme build "$prefix$name"; then
+        echo "Sucessfully built $prefix$name"
+    else 
+        echo "Building $prefix$name failed, will try to reinstall npm dependencies"
+        rm -r "$dir/node_modules"
+        npm --prefix "$dir" install "$dir"
+        giveme build "$prefix$name"
+    fi
+}
+
+if [[ "$1" == "all" ]]; then
+    for i in $(grep -oE "(ig.gfx|igd).[a-z]*" package.json);
+    do
+        giveme build $i
+    done
+else
+    for i in $@
+    do
+        i=$(echo "$i" | tr '[:upper:]' '[:lower:]')
+        if [[ $gfx =~ $i && $igd =~ $i ]]; then
+            echo "$i is a IGD and IG.GFX lib, which do you want to build? [GFX]"
+            read typ;
+
+            if [[ -z "$typ" ]]; then
+                typ="GFX"
+            fi
+
+            if [[ $typ == "GFX" ]]; then
+                build gfx $i
+            else
+                build dialogs $i
+            fi
+            continue;
+        fi
+
+
+        if [[ $gfx =~ $i ]]; then
+            build gfx $i
+        fi
+
+        if [[ $igd =~ $i ]]; then
+            build dialogs $i
+        fi
+    done
+fi

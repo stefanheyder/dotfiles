@@ -1,0 +1,2 @@
+killall java
+systemctl suspend -i

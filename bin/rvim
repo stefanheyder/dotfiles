@@ -1,0 +1,7 @@
+#! /bin/sh
+
+TMPFILE=$(mktemp)
+ssh -- "$1" sudo cat "'$2'" > ${TMPFILE}
+vim ${TMPFILE}
+ssh -- "$1" "sudo tee '$2' > /dev/null" < ${TMPFILE} && \
+  rm -f ${TMPFILE}
