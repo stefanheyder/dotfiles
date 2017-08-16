@@ -1,0 +1,249 @@
+" MAPPINGS {{{1
+"
+" LEADER MAPS {{{2
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" Diff Leader commandes
+nnoremap <leader>nf ]c
+nnoremap <leader>pf [c
+nnoremap <leader>dg :diffg<cr>
+nnoremap <leader>dp :diffpu<cr>
+vnoremap <leader>dg :diffg<cr>
+vnoremap <leader>dp :diffpu<cr>
+
+" disable highlights
+map <silent> <leader>, :noh<cr>
+
+" Close the current buffer
+map <leader>bd :Bclose<cr>
+
+" Open vimgrep and put the cursor in the right position
+map <leader>g :vimgrep // **<left><left><left><left>
+
+" display grep results
+nnoremap <leader>cc :botright cope<cr>
+
+" Spell Checking
+map <leader>ss :setlocal spell!<cr>
+map <leader>sen :setlocal spell spelllang=en_us<cr>
+map <leader>sde :setlocal spell spelllang=de_de<cr>
+
+" next/previous error
+map <leader>sn ]s
+map <leader>sp [s
+
+" add / remove word under cursor
+map <leader>sa zg
+map <leader>sd z=
+
+" find suggestions
+map <leader>f 1z=
+
+" Fast access to System Clipboard
+vmap <leader>y "+y
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+P
+
+" NAVIGATION {{{2
+
+" Buffers
+nnoremap <leader>bb :b#<CR>
+
+" Jump to as t
+nmap ü ]
+nmap Ü [
+
+" next/previous cope item
+nnoremap <leader>n :cn<cr>
+nnoremap <leader>pr :cp<cr>
+
+" next/previous list item
+nnoremap <leader>ln :lnext<cr>
+nnoremap <leader>lp :lprevious<cr>
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" PLUGINS {{{2
+" CTRLP {{{3
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_open_new_file = 'v'
+let g:ctrlp_max_depth = 3
+
+" NERDTree {{{3
+map <C-n> :NERDTreeToggle<CR>
+" }}}
+
+" YouCompleteMe {{{
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>st :YcmCompleter GetType<CR>
+let g:ycm_register_as_syntastic_checker = 0
+" }}}
+
+" Syntastic {{{3
+nnoremap <leader>sc :SyntasticCheck<cr>
+" }}}
+
+" }}}
+
+" searching
+map <space> /
+
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+" reload vimrc
+nnoremap <leader>rr :so $MYVIMRC<CR>
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+" Add new line without entering insert mode
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
+" When you press gv you vimgrep after the selected text
+vnoremap <silent> gv :call VisualSelection('gv')<CR>
+vmap <leader>rv *N:%s/<C-R>///g<left><left>
+nnoremap <leader>rw *N:%s/<C-R>///g<left><left>
+
+" Fast Normal Mode
+inoremap jj <ESC>
+inoremap kk <ESC>
+inoremap jk <ESC>
+inoremap jJ <ESC>
+
+filetype plugin indent on
+syntax on
+set shellslash
+
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Fullscreen
+au GUIEnter * simalt ~x
+
+" Set 7 lines to the cursor - when moving vertically using j/k
+set so=7
+
+" Set linenumbers 
+set nu
+
+" Spell Checking
+set spell spelllang=de_de
+set spell!
+
+" Split behavior 
+set splitbelow
+set splitright
+
+" Vertical Split Buffer Mapping
+command! -nargs=1 Vbuffer call VerticalSplitBuffer(<f-args>)
+
+" Turn on the WiLd menu
+set wildignore=*.o,*~,*.pyc,*.aux,*.pdf,*.synctex
+set wildmode=longest,list,full
+set wildmenu
+
+"Always show current position
+set ruler
+
+" Height of the command bar
+set cmdheight=2
+
+" A buffer becomes hidden when it is abandoned
+set hid
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Search Options
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+set magic
+"
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
+
+" Tabs and spaces settings
+set smarttab
+set preserveindent
+set softtabstop=0
+set shiftwidth=4
+set tabstop=4
+set noexpandtab
+set listchars=tab:▸\ ,eol:¬
+set autoindent 
+set smartindent
+set wrap 
+set lbr
+set tw=500
+
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
+" Always show the status line
+set laststatus=2
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+set surround
+set nornu
+set nonu

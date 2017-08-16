@@ -1,0 +1,17 @@
+[core]
+	excludesfile = ~/.gitignore
+[user]
+	email = stefan.heyder@gmail.com
+	name = Stefan Heyder
+[push]
+	default = simple
+[pull]
+	rebase = true
+[merge]
+	ff = only
+[commit]
+	verbose = true
+[alias]
+	pp = "!func() {git pull && git push;}; func"
+[url "git@github.com:"]
+	insteadOf = https://github.com/
