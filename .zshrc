@@ -109,9 +109,6 @@ fi
 # Start 'thefuck' (https://github.com/nvbn/thefuck), a misstyped command completer
 eval $(thefuck --alias)
 
-# Start autojump (https://github.com/wting/autojump) for quick jumping between commonly used directories
-. /usr/share/autojump/autojump.sh
-
 # File containing aliases; 
 ALIAS_FILES=("${HOME}/.zshrc" "${HOME}/.aliases" "${HOME}/.exports")
 
@@ -137,3 +134,4 @@ reload_aliases () {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd reload_aliases
 export X="AaS"
+

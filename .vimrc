@@ -34,9 +34,8 @@ Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'jalvesaq/Nvim-R'
 
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 call plug#end()   
 filetype plugin indent on
@@ -380,7 +379,7 @@ if has("gui_running")
     set t_Co=256
     set guitablabel=%M\ %t
 else
-	colorscheme molokai
+	colorscheme gruvbox
 	set background=dark
     set t_Co=256
 	set guifont=Hack
@@ -425,6 +424,7 @@ set listchars=tab:▸\ ,
 
 source ~/.quicktexrc
 let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_view_method = 'mupdf'
 
 call vimtex#imaps#add_map({
   \ 'lhs' : '<m-i>',
@@ -450,3 +450,21 @@ endfunction
 command! CreateHourlyTopics call CreateHourlyTopics()
 
 let g:R_tmux_split = 1
+let g:R_indent_commented = 0
+let g:R_indent_align_args = 0
+
+let r_indent_ess_comments = 0
+let g:R_indent_ess_compatible = 0
+let r_indent_align_args = 0
+let r_indent_ess_compatible = 0
+
+set colorcolumn=80
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+

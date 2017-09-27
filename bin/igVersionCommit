@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+PACKAGE=$(node -p -e "require('./package.json').name.replace('@intelligentgraphics/', '')")
+VERSION=$(node -p -e "require('./package.json').version")
+
+git commit -m "[$PACKAGE] version $VERSION"
