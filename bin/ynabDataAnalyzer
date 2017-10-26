@@ -1,0 +1,6 @@
+#!/usr/bin/R
+
+args <- commandArgs(trailingOnly = TRUE)
+print(args[0])
+
+exit

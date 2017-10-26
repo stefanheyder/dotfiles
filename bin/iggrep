@@ -1,0 +1,2 @@
+#/bin/zsh
+grep "$@" --exclude-dir=node_modules  --exclude-dir=dist --exclude-dir=def --exclude-dir=modules "$IGHOME/ig.web.core" "$IGHOME/ig.web.dialogs" $KPSA  | sed -e "s@$IGHOME@@g"

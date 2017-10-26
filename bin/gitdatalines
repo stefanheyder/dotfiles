@@ -1,0 +1,10 @@
+#!/bin/sh
+
+git log --oneline --pretty="@%h %ad" --date=short --stat "$@" |
+grep -v \| |
+tr "\n" " "  |
+tr "@" "\n" |
+awk '{print $2 " " $6-$8}' | # extact date, insertions - deletions
+tail -n +2 |
+awk '{sum[$1] += $2;} END{for (id in sum) { print id " " sum[id]} }' | # sum for each day
+sort

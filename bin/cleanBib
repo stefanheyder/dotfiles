@@ -1,0 +1,4 @@
+#!/bin/sh
+
+bibexport -o "$1.bib" "$1"
+find . -name "$1.bib-s*" -delete

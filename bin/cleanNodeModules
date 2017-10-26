@@ -1,4 +1,4 @@
 #!/bin/zsh
 
-rm -r node_modules
+rm -r node_modules/@intelligentgraphics/
 npm i

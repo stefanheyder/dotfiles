@@ -1,17 +1,11 @@
 #!/bin/zsh
+echo "These are the current changes"
 
+publish-diff
 
-echo "Did you update the local master?"
-echo "Do you want to see all changes as files only or as diff? [files]"
+read x
 
-read asDiff
-
-if [[ -z "$asDiff" ]]; then
-    git diff --name-only HEAD HEAD..origin/master .
-else
-    git diff HEAD HEAD..origin/master .
-fi
-
+# Edit package.json and Readme
 vim -O $(find . -maxdepth 1 -regextype sed -regex ".*/\(readme\|README\|Readme\|package.json\).*")
 
 echo "Do you want to publish now? [yes]"

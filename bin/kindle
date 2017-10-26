@@ -1,0 +1,17 @@
+#!/bin/zsh
+FROM="heyder.stefan@googlemail.com"
+TO="heyder.stefan_54@kindle.com"
+
+echo "Enter Password for gmail account"
+read password
+
+for book in "$@"; do
+    local epub="$book"
+    local mobi=$(echo "$epub" | sed 's/\(.*\.\)epub/\1mobi/')
+
+    ebook-convert "$epub" "$mobi" --output-profile kindle_pw
+
+    calibre-smtp "$FROM" "$TO" "Stefan" -r "smtp.gmail.com" -u "heyder.stefan@gmail.com" -a "$mobi" -p $password -e TLS --port 587
+
+    rm "$mobi"
+done

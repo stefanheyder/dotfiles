@@ -1,0 +1,4 @@
+#!/bin/sh
+gitdatalines "$@" |
+tac |
+gnuplot -p -e 'set grid;set timefmt "%Y-%m-%d"; set yzeroaxis; set xdata time; plot "/dev/stdin" using 1:2 title "Progress" with lines '

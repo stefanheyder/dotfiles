@@ -19,7 +19,7 @@ export CIS=$IGHOME/kps.ambiente.online/code/shared/cis
 export KAPI=$IGHOME/kps.ambiente.online/code/shared/api
 
 export CONSETA=$IGHOME/cor/conseta
-export TRIO=$IGHOME/cor/demo/trio_interaktion
+export TRIO=$IGHOME/cor/trio
 
 # T2 Cadops Project
 export CADOPS=$IGHOME/ig.web.t2.cadops
@@ -40,8 +40,10 @@ export NODE_PATH=/usr/lib/nodejs/node-v7.4.0/lib
 export IG6="ig6.intelligentgraphics.biz"
 export IG6KPSO="/usr/share/nginx/html/kps.online/"
 
+export DropBox="$HOME/Dropbox"
+export Literatur="$DropBox/Literatur"
 
 # Android Developement
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$HOME/.anaconda/bin

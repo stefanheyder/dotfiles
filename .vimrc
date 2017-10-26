@@ -424,7 +424,6 @@ set listchars=tab:▸\ ,
 
 source ~/.quicktexrc
 let g:vimtex_quickfix_open_on_warning = 0
-let g:vimtex_view_method = 'mupdf'
 
 call vimtex#imaps#add_map({
   \ 'lhs' : '<m-i>',
@@ -435,6 +434,8 @@ call vimtex#imaps#add_map({
   \})
 " Necessary if noexpandtab is set
 " let g:vimtex_indent_on_ampersand=0
+
+nnoremap <leader>toc :VimtexTocToggle<cr>
 
 nnoremap <leader>cd :cd<space>%:p:h<cr>
 

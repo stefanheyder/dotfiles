@@ -1,0 +1,6 @@
+#!/bin/sh
+
+gitdatalines "$@" |
+awk '{sum +=$2; $2=sum}1' | # accumulate 
+tac | # reverse data, we want them chronologically
+gnuplot -p -e 'set grid;set timefmt "%Y-%m-%d";  set xdata time; plot "/dev/stdin" using 1:2 title "Accumulated Progress" with lines '

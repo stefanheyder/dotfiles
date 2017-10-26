@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd $MA/TeX/thesis
+cleanBib "thesis"
+
+current=`date +%F`
+git add .
+git commit -m "Stand $current"
+accumulatedProgress

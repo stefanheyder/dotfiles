@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd $TRIO
+
+cleanNodeModules
+if npm run dist; then
+    tar -zcvf "trio$1.tar.gz" httpdocs
+
+    rm -r httpdocs
+fi

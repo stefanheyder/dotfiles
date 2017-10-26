@@ -1,0 +1,5 @@
+#!/bin/sh
+
+file=`ls -1t $DOWNLOADS | head -1`
+
+mv "$DOWNLOADS/$file" "$Literatur"
