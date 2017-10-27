@@ -1,17 +1,9 @@
 #!/bin/zsh
 
-fileName="/tmp/texdata"
-if [[ -f "$fileName" ]]; then
-    rm "$fileName"
-fi
-
-touch "$fileName"
-
 for F in $(git log --children | grep commit\   | sed "s;commit ;;" | tac | xargs echo); do
-    echo "$F"
     git checkout $F 2> /dev/null 1>&2
     texfiles=$(find . -name "*.tex")
-    echo $(git show -s --date=short --format=%ad) " " $(texcount -total -brief "$texfiles" | grep "Total" | sed "s@+\|(\|/\|)@ @g" | sed "s/Total//") >> "$fileName"
+    echo $(git show -s --date=short --format=%ad) " " $(texcount -total -brief "$texfiles" | grep "Total" | sed "s@+\|(\|/\|)@ @g" | sed "s/Total//")
 done
-git checkout master
+git checkout master 2> /dev/null 1>&2
 
