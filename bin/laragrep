@@ -1,2 +1,2 @@
 #/bin/zsh
-grep "$@" --exclude-dir=node_modules  --exclude-dir=vendor --exclude-dir=public "$LARA"| sed -e "s@$LARA@@g"
+grep "$@" --exclude-dir=node_modules  --exclude-dir=vendor --exclude-dir=storage --exclude-dir=public "$LARA"| sed -e "s@$LARA@@g"

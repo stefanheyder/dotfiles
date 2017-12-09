@@ -1,0 +1,4 @@
+#!/bin/sh
+cd $LARA/../../
+
+vagrant up

@@ -2,3 +2,7 @@ yarn.lock
 .idea
 npm-debug.log
 .~lock.*
+
+bd_credentials.php
+
+.vagrant-ssh

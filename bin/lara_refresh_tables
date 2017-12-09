@@ -1,0 +1,4 @@
+#!/bin/sh
+cd $LARA
+
+vagrant ssh-config --host default | ssh -F /dev/stdin default "echo 'DROP DATABASE lara; CREATE DATABASE lara;' | mysql && cd /home/vagrant/Code/Lara && php artisan migrate --seed"

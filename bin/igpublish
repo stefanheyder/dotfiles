@@ -1,9 +1,7 @@
 #!/bin/zsh
 echo "These are the current changes"
 
-publish-diff
-
-read x
+#publish-diff
 
 # Edit package.json and Readme
 vim -O $(find . -maxdepth 1 -regextype sed -regex ".*/\(readme\|README\|Readme\|package.json\).*")

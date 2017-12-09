@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+dirs=("$IGHOME/ig.web.dialogs" "$IGHOME/ig.web.core" "$IGHOME/ig.web.configuration" "$KPSA/../shared" )
+
+for dir in $dirs; do
+    cd $dir
+    git pull
+    for subdir in `find . -maxdepth 2 -name "package.json" | sed "s/package.json//g"`; do
+        cd "$dir/$subdir"
+        project=$( node -p -e "require('./package.json').name")
+        echo "Updating $project"
+        npm install 1> /dev/null
+    done
+done
+
+npm i -g @intelligentgraphics/giveme
+
+cd $KPSA
+giveme

@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+texfiles=$1
+
+if [[ -z "$texfiles" ]]; then
+    texfiles=$(find . -name "*.tex")
+fi
+
+echo $(date --iso-8601) " " $(texcount -total -brief "$texfiles" | grep "Total" | sed "s@+\|(\|/\|)@ @g" | sed "s/Total//") 

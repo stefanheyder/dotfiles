@@ -281,7 +281,7 @@ map <leader>sa zg
 map <leader>sd z=
 
 " find suggestions
-map <leader>f 1z=
+map <leader>sf 1z=
 
 " Fast access to System Clipboard
 vmap <Leader>y "+y
@@ -468,4 +468,3 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-

@@ -1,9 +1,14 @@
-#!/bin/sh
+#!/bin/zsh
 
 cd $MA/TeX/thesis
+texcountfile=".texcount"
 cleanBib "thesis"
 
 current=`date +%F`
 git add .
 git commit -m "Stand $current"
+
+words >> "$texcountfile"
+
 accumulatedProgress
+wordProgress "$texcountfile"

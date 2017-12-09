@@ -1,7 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-gitdatapages |
-awk '{sum[$1] += $2;} END{for (id in sum) { print id " " sum[id]} }' | # sum for each day
-sort |
+fileName=$1
+
+if [[ -z "$fileName" ]]; then
+    fileName=`mktemp /tmp/texcount.XXXXXX`
+
+    gitdatapages > "$fileName"
+fi
+
+commitInfoPerDay "$fileName" |
 gnuplot -p -e 'set grid;set timefmt "%Y-%m-%d";  set xdata time; plot "/dev/stdin" using 1:2 title "Amount of words" with lines '
 
+commitInfoPerDay "$fileName" |
+gnuplot -p -e 'set grid;set timefmt "%Y-%m-%d";  set xdata time; plot "/dev/stdin" using 1:7 title "Amount of equations" with lines '
+
+commitInfoPerDay "$fileName" |
+awk '{old=$2; $2-=o2; o2=old; print;}' | # differences => per day
+gnuplot -p -e 'set grid;set timefmt "%Y-%m-%d"; set boxwidth 50000 absolute; set style fill solid; set xdata time; plot "/dev/stdin" using 1:2 title "Words per day" with boxes '
