@@ -1,0 +1,6 @@
+inoremap jj <ESC>
+inoremap jk <ESC>
+
+nnoremap ,p "*p
+nnoremap ,y "*y
+vnoremap ,y "*y
