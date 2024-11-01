@@ -1,0 +1,11 @@
+{
+    "diagnostic.level": "warning",
+    "diagnostic.infoSign": "∆",
+    "diagnostic.hintSign": "∆",
+    "diagnostic.warningSign": "∆",
+    "diagnostic.errorSign": "▣",
+    "snippets.extends": {
+        "rmd": ["r", "tex"]
+    },
+    "coc.preferences.jumpCommand": "vsplit"
+}

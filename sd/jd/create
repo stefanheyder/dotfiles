@@ -1,0 +1,104 @@
+#!/usr/bin/python
+
+from pathlib import Path
+import requests
+import os
+import sys
+import re
+
+name = sys.argv[1]
+category_id, id = re.compile(r"\d+").findall(name[:5])
+area_id = category_id[0] + "0"
+
+# Dirs
+obs = Path("/home/stefan/Nextcloud/obsidian/workspace/")
+ws = Path("/home/stefan/workspace")
+
+dirs = [obs, ws]
+for dir in dirs:
+    area_path = [
+        d.path for d in os.scandir(dir) if d.is_dir() and d.name.startswith(area_id)
+    ][0]
+    category_path = [
+        d.path
+        for d in os.scandir(area_path)
+        if d.is_dir() and d.name.startswith(category_id)
+    ][0]
+    category_path = Path(category_path)
+    id_path = category_path / name
+
+    if not id_path.exists():
+        os.mkdir(id_path)
+
+    if dir == obs and not (id_path / f"{name}.md").exists():
+        with open(id_path / f"{name}.md", "w") as f:
+            f.write("")
+
+# Marvin
+marvin_token = "nO1sWa5C2xs2qwCUR8fw7/OMv4k="
+marvin_full_token = "6qm3+RPVH60lJi91Lr/62Q3uVlQ="
+
+standard_header = {"X-API-Token": marvin_token}
+full_header = {"X-Full-Access-Token": marvin_full_token}
+
+category_response = requests.get(
+    url="https://serv.amazingmarvin.com/api/categories",
+    headers=standard_header
+)
+
+potential_categories = list(
+        filter(
+            lambda x: x["title"].startswith(f"{category_id} "),
+            category_response.json(),
+        )
+    )
+    
+category_exists = len(
+    potential_categories
+) > 0
+
+
+if category_exists:
+    marvin_category = potential_categories[0]
+    project_creation_response = requests.post(
+        url="https://serv.amazingmarvin.com/api/addProject",
+        json={"title": name, "parentId": marvin_category["_id"]},
+        headers={"X-API-Token": marvin_token}
+    )
+
+    project_marvin = project_creation_response.json()
+
+    requests.post(
+        url="https://serv.amazingmarvin.com/api/addTask",
+        json={"title": f"Plan {name} +today", "parentId": project_marvin["_id"]},
+        headers={"X-API-Token": marvin_token},
+    )
+
+else: 
+    """
+    area_marvin = [
+        cat for cat in category_response.json() if cat["title"].startswith(f"{area_id} ")
+    ][0]
+
+
+    requests.post(
+        url="https://serv.amazingmarvin.com/api/addCategory",
+        params={"title": name, "parentId": area_marvin["_id"]},
+        headers={"X-API-Token": marvin_token},
+    )
+
+
+    project_response = requests.get(
+        url="https://serv.amazingmarvin.com/api/projects",
+        headers={"X-API-Token": marvin_token},
+    )
+
+    project_marvin = [cat for cat in project_response.json() if cat["title"] == name][0]
+
+    requests.post(
+        url="https://serv.amazingmarvin.com/api/addTask",
+        params={"title": f"Plan {name}", "parentId": project_marvin["_id"]},
+        headers={"X-API-Token": marvin_token},
+    )
+    """
+    pass

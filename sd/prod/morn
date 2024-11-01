@@ -1,0 +1,19 @@
+#!/bin/zsh
+# Morning Setup
+
+#zenity --info --text="Plan my day"
+
+#xdg-open "obsidian://advanced-uri?vault=workspace&commandid=workspace%253Aclose-others" >/dev/null 2>&1
+#xdg-open "obsidian://advanced-uri?vault=workspace&commandid=daily-notes" >/dev/null 2>&1
+#xdg-open "obsidian://advanced-uri?filepath=daily_notes/weeklies/${$(date +%Y-W%W)}.canvas" >/dev/null 2>&1
+#
+zenity --info --text="Diary"
+
+xdg-open "obsidian://advanced-uri?vault=workspace&commandid=workspace%253Aclose-others" >/dev/null 2>&1
+xdg-open "obsidian://advanced-uri?filepath=_Inbox/Diary.md" >/dev/null 2>&1
+i3-msg '[class="obsidian"] focus' >/dev/null 2>&1
+
+termdown 5m
+zenity --info --text="Finish diary, 1 more minute."
+termdown 1m
+zenity --info --text="Finished."

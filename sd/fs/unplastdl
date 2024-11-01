@@ -1,0 +1,7 @@
+#!/bin/sh
+# Unpack last downloaded zip file to this directory 
+
+DOWNLOADS=~/Downloads
+file=`ls -1t $DOWNLOADS | head -1`
+unp --verbose "$DOWNLOADS/$file"
+

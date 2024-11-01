@@ -1,0 +1,10 @@
+#!/bin/sh
+# Move newly downloaded literature file to $Literatur
+
+DOWNLOADS="$HOME/Downloads"
+Literatur="$HOME/Nextcloud/Literatur"
+file=`ls -1t $DOWNLOADS | head -1`
+
+mv "$DOWNLOADS/$file" "$Literatur"
+
+echo "Moved $file to $Literatur"

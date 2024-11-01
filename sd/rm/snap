@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./script.sh arg-one arg-two
+
+This is an awesome bash script to make your life better.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+    cd "/home/stefan/workspace/archive/40 Telic Activities/46 Tools/46.03 Remarkable/reSnap"
+    ssid=$(nmcli -t -f active,ssid dev wifi | grep -E '^yes' | sed -e "s/yes://g")
+    if [[ "$ssid" == "GainTrain" ]]; then
+        rm_ip="192.168.178.55"
+    else
+        if [[ "$1" == "" ]]; then
+            echo "Pass last part of IP for eduroam"
+            exit 1
+        fi
+        rm_ip="141.24.111.$1"
+    fi
+    # tmp image file
+    tmpfile=$(mktemp /tmp/snap.XXXXXX.png)
+
+    ./reSnap.sh -s "$rm_ip" -n --output "$tmpfile"
+    ./postprocess_example.py "$tmpfile"
+    wl-copy -t image/png < "$tmpfile"
+}
+
+main "$@"

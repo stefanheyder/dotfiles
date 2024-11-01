@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./paperless_export
+
+This exports the documents in paperless to
+/usr/share/paperless/export
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+    sudo systemctl start paperless.target
+    sudo runuser -l paperless -c 'cd /usr/share/paperless/src && python manage.py document_exporter ../export'
+    sudo systemctl stop paperless.target
+}
+
+main "$@"

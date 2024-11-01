@@ -1,0 +1,41 @@
+#!/usr/bin/python
+
+from pathlib import Path
+import requests
+import os
+
+marvin_token = "nO1sWa5C2xs2qwCUR8fw7/OMv4k="
+marvin_full_token = "6qm3+RPVH60lJi91Lr/62Q3uVlQ="
+
+standard_header = {"X-API-Token": marvin_token}
+full_header = {"X-Full-Access-Token": marvin_full_token}
+
+category_response = requests.get(
+    url="https://serv.amazingmarvin.com/api/categories",
+    headers=standard_header
+)
+
+obs = Path("/home/stefan/Nextcloud/obsidian/workspace/")
+
+def find(name, path):
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
+
+def update_marvin_note(note_path, marvin_category):
+    with(open(note_path, 'r')) as note:
+        note_contents = note.read()
+        
+    result = requests.post(
+        url="https://serv.amazingmarvin.com/api/doc/update",
+        json={"itemId": marvin_category["_id"], "setters": [{"key": "note", "val": note_contents}]},
+        headers=full_header
+    )
+    
+
+for category in category_response.json():
+    note_path = find(f"{category['title']}.md", obs)
+    if note_path is None:
+        continue
+    
+    update_marvin_note(note_path, category)

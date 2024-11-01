@@ -1,0 +1,1 @@
+/home/stefan/workspace/10 Professional Primary/13 Statistical Consulting/13.07 Organisation/first_consultation.sh

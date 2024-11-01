@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./prepare_actual
+
+    This script will prepare relevant csv files in
+    the download directory (~/Download) for import
+    in actual.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+function toUTF8 {
+    # convert to UTF-8 trick is due to 
+    # https://stackoverflow.com/questions/64860/best-way-to-convert-text-files-between-character-sets
+    nvim -u NONE +"set nobomb | set fenc=utf8 | x" "$1"
+}
+
+main() {
+    # find DKB file in download directory
+    # file name pattern is *_DE47120300001035301918.csv    
+    dkb_file=$(find $HOME/Downloads -name "*_DE47120300001035301918.csv" | head -n 1)
+    # if file exists, clean it
+    if [[ -f "$dkb_file" ]]; then
+        # first 4 lines are metdata and not needed
+        sed -ie '1,4d' "$dkb_file"
+
+        toUTF8 $dkb_file
+        # filter out everything after Jan 1st 2023, convert to standard csv
+        Rscript -e "library(lubridate);df <- read.csv2('$dkb_file'); write.csv(df[dmy(df\$Buchungsdatum) >=ymd('2023-01-01'),], '$dkb_file')"
+    fi
+
+    # find ING file in download directory
+    # file name pattern is Umsatzanzeige_DE47500105175436088190*
+    ing_file=$(find ~/Downloads -name "Umsatzanzeige_DE47500105175436088190*" | head -n 1)
+    # if file exists, clean it
+    if [[ -f "$ing_file" ]]; then
+        # first 12 lines are metdata and not needed
+        sed -ie '1,13d' "$ing_file"
+        # convert to UTF8
+        toUTF8 $ing_file
+        # ING file does not go as far back as DKB file does
+        Rscript -e "print('$ing_file');write.csv(read.csv2('$ing_file'), '$ing_file')"
+    fi
+
+    # prompt user for deletion, default is true
+    read -p "Delete ING/DKB files in ~/Downloads? [Y/n] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z $REPLY ]]; then
+        rm -if "$dkb_file" "$ing_file"
+    fi
+}
+
+main "$@"

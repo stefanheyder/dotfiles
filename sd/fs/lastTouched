@@ -1,0 +1,3 @@
+#/bin/sh
+# which files was touched last in the directory?
+ls -1t "$1" | head -1

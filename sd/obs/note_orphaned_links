@@ -1,0 +1,18 @@
+#!/bin/bash
+# Find orphaned links in Obsidian
+
+# source: find_orphaned_obsidian_links.sh
+# Written by Marcmagn1, October 2020
+# from https://forum.obsidian.md/t/script-find-orphaned-links-linking-to-no-existing-note/6976
+
+# Step 1 
+VAULT_PATH="/home/stefan/Nextcloud/obsidian/workspace/"
+MISSING_NODES_FILE="$VAULT_PATH/missing_nodes.md"
+
+find $VAULT_PATH -name '*.md' -type f -printf "%f\n" | sort -u | grep -v "missing_nodes.md" | sed "s/\.md//" > /tmp/notes_list.txt 
+
+# Step 2)
+grep -roiIEh "\[\[([a-zA-Z0-9 ]*)\]\]" --exclude-dir="${VAULT_PATH}.obsidian/**" --exclude-dir="${VAULT_PATH}templates/**" ${VAULT_PATH}  | sort -u | sed "s/\]]//" | sed 's/\[\[//' > /tmp/links_list.txt 
+
+# Step 3)
+grep -Fxv -f /tmp/notes_list.txt /tmp/links_list.txt | sed 's/^/[[/' | sed 's/$/]]/' > "$MISSING_NODES_FILE"

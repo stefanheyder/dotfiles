@@ -1,0 +1,21 @@
+#!/bin/sh
+
+incollection=$(mktemp)
+indirectory=$(mktemp)
+
+ls . | grep "[^A-Z]*.tex" | sed -e "s/.tex//g" >$indirectory
+grep -o "\\input{.*}" collection.tex | sed -e "s/input{//g;s/}//g;s/.tex//g" >$incollection
+
+
+echo "The following files are in the directory but not in the collection" 
+for x in $(grep -Fxv -f $incollection $indirectory)
+do
+    echo $x.tex
+done
+
+
+echo "The following files are in the collection but not in the directory" 
+for x in $(grep -Fxv -f $indirectory $incollection)
+do 
+    echo $x.tex
+done

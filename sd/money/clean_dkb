@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./script.sh arg-one arg-two
+
+This is an awesome bash script to make your life better.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+    # in directory downloads find DKB file
+    # it has pattern %d-%m-%Y_Umsatzliste_Girokonto_DE47120300001035301918.csv
+    dkb_file="$HOME/Downloads/$(date +%d-%m-%Y)_Umsatzliste_Girokonto_DE47120300001035301918.csv"
+
+    # first 4 lines are metadata and not needed
+    sed -ie '1,4d' "$dkb_file"
+    # convert csv2 to csv
+    Rscript -e "write.csv(read.csv2('$dkb_file'), '$dkb_file')"
+}
+
+main "$@"

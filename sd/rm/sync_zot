@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "/home/stefan/workspace/40 Telic Activities/46 Tools/46.03 Remarkable/remarkable_zotero_sync"
+
+while true; do
+    read -p "Delete files on RM that are not in Zotero directory?" yn
+    case $yn in
+        [Yy]* ) python sync.py --rmapi /home/stefan/go/bin/rmapi --remarks "/home/stefan/workspace/40 Telic Activities/46 Tools/46.03 Remarkable/remarks" --delete /home/stefan/Zotero/_Tablet/ Papers ; break;;
+        [Nn]* ) python sync.py --rmapi /home/stefan/go/bin/rmapi --remarks "/home/stefan/workspace/40 Telic Activities/46 Tools/46.03 Remarkable/remarks" /home/stefan/Zotero/_Tablet/ Papers; break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done

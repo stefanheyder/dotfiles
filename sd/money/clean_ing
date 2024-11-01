@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./script.sh arg-one arg-two
+
+This is an awesome bash script to make your life better.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+    ing_file="$HOME/Downloads/Umsatzanzeige_DE47500105175436088190_$(date +%Y%m%d).csv"
+    nvim -u NONE +"set nobomb | set fenc=utf8 | x" "$ing_file"
+    
+    # first 13 lines are metdata and not needed
+    sed -ie '1,13d' "$ing_file"
+    Rscript -e "write.csv(read.csv2('$ing_file'), '$ing_file')"
+}
+
+main "$@"

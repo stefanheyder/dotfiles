@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Tick Tock - Working Clock
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./tt [duration]
+
+This script will start a timer for the given duration,
+and prompt for a reason. After the timer is finished,
+it will prompt for a 3min wrap-up.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+    # if $1 is empty, use 25min as default
+    if [[ -z "${1-}" ]]; then
+        set -- 25m
+    fi
+    starttime=$(date +%Y-%m-%d-%H-%M)
+    reason=$(zenity --entry --text="What's the reason / goal? Start" | sed -e "s/,/;/g")
+    # write term down output to file, so swaybar can read it
+    termdown "$1" 
+    zenity --info --text="3min wrap-up; then take a break" 
+    termdown 3m 
+    zenity --info --text="Break!"
+    endtime=$(date +%Y-%m-%d-%H-%M)
+    echo  "$starttime,$endtime,$reason" >>$HOME/workspace/40\ Telic\ Activities/42\ PKM/42.08\ Productivity\ System/working.csv
+}
+
+main "$@"

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+posed=$(mktemp)
+indirectory=$(mktemp)
+
+ls . | grep "[^A-Z]*.tex" | sed -e "s/.tex//g" >$indirectory
+find "$@" -name "*.tex" -exec grep -o "\\input{.*}" {} \+ | sed -e "s/input{//g;s/}//g;s/.tex//g;s/.*://g;s/^[^A-Za-z0-9]*//g" | grep -v "head" | uniq | sort >$posed
+
+echo "The following files are in the colletion but have not yet been posed" 
+for x in $(grep -Fxv -f $posed $indirectory)
+do 
+    echo $x.tex
+done

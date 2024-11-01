@@ -1,0 +1,8 @@
+#!/bin/sh
+# Open Obsidian with current agend item
+
+firstlink=$(Rscript ~/workspace/40\ Telic\ Activities/46\ Tools/46.02\ Daily\ Agenda/agenda.R | sed 's/.*\[\[\(.*\)\]\].*/\1/' | sed 's/ /%20/g')
+
+xdg-open "obsidian://open?file=$firstlink"
+
+i3-msg "[class=obsidian] focus"

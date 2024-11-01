@@ -1,0 +1,7 @@
+#!/bin/zsh
+# Move last downloaded file to current directory
+
+file=`ls -1t ~/Downloads | head -1`
+# move to current directory if no argument is given
+# otherwise move with name equal to first argument to current directory
+mv -v "$HOME/Downloads/$file" ./"${1:-$file}"

@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ -n "${TRACE-}" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./script.sh arg-one arg-two
+
+This is an awesome bash script to make your life better.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+	# Directory to look for PDF files. If no argument is given, use the paperless directory
+	DIR=${1:-"/Users/stefan/Library/Mobile Documents/com~apple~CloudDocs/paperless consume"}
+
+	# Find the last two modified PDF files in the directory.
+	# Sort by modification time and select the last two.
+	# 'head -n 2' gives the last two in reverse order (newest first).
+	# Array to store the last two modified PDF files.
+	odd_pages_pdf="$(ls -t "$DIR"/*.pdf | head -n 2 | tail -n 1)"
+	even_pages_pdf="$(ls -t "$DIR"/*.pdf | head -n 1)"
+
+	# Output filename: Use the name of the even pages file, appending "_collated"
+	output_pdf="${even_pages_pdf%.pdf}_collated.pdf"
+
+	# Run pdftk to merge the files, taking care of the reverse order for even pages.
+	pdftk A="$odd_pages_pdf" B="$even_pages_pdf" shuffle A Bend-1 output "$output_pdf"
+
+	# Check if pdftk was successful
+	if [ $? -eq 0 ]; then
+	    echo "Merged PDF created as: $output_pdf"
+	    echo "Deleting source PDF files..."
+	    rm "$odd_pages_pdf" "$even_pages_pdf"
+	    echo "Source files deleted."
+	else
+	    echo "Error: Failed to merge PDFs."
+	    exit 1
+	fi
+
+}
+
+main "$@"
