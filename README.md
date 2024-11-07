@@ -9,7 +9,17 @@ config config status.showUntrackedFiles no
 # Installation
 
 ```bash
-git clone --separate-git-dir=~/.dotfiles https://github.com/stefanheyder/dotfiles.git ~
+git clone --bare https://github.com/stefanheyder/dotfiles.git $HOME/.dotfiles
+```
+
+Add  the following alias to your shells' configuration:
+```bash
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+```
+
+and run 
+```bash
+config config status.showUntrackedFiles no
 ```
 
 # Further reading
