@@ -13,4 +13,4 @@ if vim.fn.exists('$WSL_DISTRO_NAME') == 1 then
      }
 end
 
-vim.cmd('source ~/.config/nvim/init.nvim')
+vim.cmd('source ~/.config/nvim/_init.vim')
