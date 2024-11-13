@@ -3,28 +3,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
-
-# Set the directory we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-	mkdir -p "$(dirname $ZINIT_HOME)"
-	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
-
-# zinit plugins
-#zinit ice depth=1; zinit light romkatv/powerlevel10k
-zinit load starship/starship
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light ianthehenry/sd
-#zinit light zsh-users/zsh-completions
-#zinit light zsh-users/zsh-autosuggestions
-#zinit light Aloxaf/fzf-tab
-#jzinit light unixorn/fzf-zsh-plugin
 # starship
 eval "$(starship init zsh)"
 # automatically activate venvs
