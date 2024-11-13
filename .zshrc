@@ -3,8 +3,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
+
 # starship
 eval "$(starship init zsh)"
+
 # automatically activate venvs
 python_venv() {
   MYVENV=./venv
@@ -22,3 +24,12 @@ eval "$(pyenv init -)"
 # aliases
 alias w="cd ~/workspace"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+case "$OSTYPE" in
+  darwin*)
+    # ...
+  ;;
+  linux*)
+    # ...
+  ;;
+esac
