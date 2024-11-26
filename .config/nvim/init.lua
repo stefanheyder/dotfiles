@@ -1,16 +1,11 @@
-if vim.fn.exists('$WSL_DISTRO_NAME') == 1 then
-     vim.g.clipboard = {
-       name = 'WslClipboard',
-       copy = {
-	 ['+'] = 'clip.exe',
-	 ['*'] = 'clip.exe',
-       },
-       paste = {
-	 ['+'] = 'powershell.exe -c Get-Clipboard',
-	 ['*'] = 'powershell.exe -c Get-Clipboard',
-       },
-       cache_enabled = 0,
-     }
+-- Function to determine the operating system
+local function is_mac()
+  return vim.fn.has('macunix') == 1
 end
+
+local function is_wsl()
+  return vim.fn.has('wsl') == 1
+end
+
 
 vim.cmd('source ~/.config/nvim/_init.vim')

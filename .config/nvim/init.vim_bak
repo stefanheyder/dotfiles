@@ -16,7 +16,7 @@ if exists('g:vscode')
 	nnoremap <C-h> <Cmd>call VSCodeNotify('workbench.action.focusLeftGroup')<CR>
 	
 	set clipboard=unnamedplus
-	call plug#begin('~/.vim/plugged')
+	call plug#begin('/Users/stefan/.vim/plugged')
 
 	Plug 'tpope/vim-surround'
 	Plug 'justinmk/vim-sneak'
@@ -35,7 +35,7 @@ source "~/.config/nvim/standard_settings.vim"
 
 
 " Plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('/Users/stefan/.vim/plugged')
 
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-sneak'
