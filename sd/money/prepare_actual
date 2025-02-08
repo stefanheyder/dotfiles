@@ -29,7 +29,7 @@ function toUTF8 {
 main() {
     # find DKB file in download directory
     # file name pattern is *_DE47120300001035301918.csv    
-    dkb_file=$(find $HOME/Downloads -name "*_DE47120300001035301918.csv" | head -n 1)
+    dkb_file=$(find $HOME/Downloads -maxdepth 1 -name "*_DE47120300001035301918.csv" | head -n 1)
     # if file exists, clean it
     if [[ -f "$dkb_file" ]]; then
         # first 4 lines are metdata and not needed

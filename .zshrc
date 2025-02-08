@@ -26,12 +26,50 @@ python_venv() {
   # when you cd into a folder that doesn't
   [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
 }
-autoload -U add-zsh-hook
-add-zsh-hook chpwd python_venv
-python_venv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+
+# zinit plugins
+#zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit load starship/starship
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light ianthehenry/sd
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+zinit light unixorn/fzf-zsh-plugin
+
+autoload -Uz compinit
+compinit -C
+
+# starship
+eval "$(starship init zsh)"
+
+# fzf
+source <(fzf --zsh)
+
+# platform dependent configurations
+case "$(uname -s)" in
+  Darwin*) source ~/.config/zsh/macos.zsh ;;
+  Linux*)
+    if [[ -n "$WSL_DISTRO_NAME" ]]; then
+      source ~/.config/zsh/wsl.zsh
+    else
+      source ~/.config/zsh/linux.zsh
+    fi
+    ;;
+esac
+
+# fix starship initial blank line
+# see https://www.reddit.com/r/commandline/comments/13r2ou3/comment/kvtv6lw/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+precmd() {
+  if [ ! -z "$BUFFER" ]; then
+    precmd() {
+      precmd() {
+        echo
+      }
+    }
+  fi
+}
+
 # aliases
 alias w="cd ~/workspace"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'

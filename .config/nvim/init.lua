@@ -7,5 +7,5 @@ local function is_wsl()
   return vim.fn.has('wsl') == 1
 end
 
-
 vim.cmd('source ~/.config/nvim/_init.vim')
+

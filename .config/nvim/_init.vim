@@ -40,7 +40,14 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-sneak'
 Plug 'lervag/vimtex'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
+
+" Smart split navigation
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
 
