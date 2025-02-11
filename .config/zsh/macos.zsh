@@ -1,5 +1,10 @@
 export ICLOUD='/Users/stefan/Library/Mobile Documents/com~apple~CloudDocs'
 
+alias ctrlc=pbcopy
+alias ctrlv=pbpaste
+
+
+
 conda config --set changeps1 False
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
