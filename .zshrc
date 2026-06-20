@@ -20,7 +20,7 @@ ZSH_THEME=""
 plugins=(git fzf)
 source $ZSH/oh-my-zsh.sh
 
-# starship
+
 eval "$(starship init zsh)"
 
 # automatically activate venvs
@@ -63,6 +63,28 @@ case "$(uname -s)" in
     ;;
 esac
 
+
+
+# Allow Ranger to `cd` your current shell by exiting with capital Q
+function ranger {
+  local IFS=$'\t\n'
+  local tempfile="$(mktemp -t tmp.XXXXXX)"
+  local ranger_cmd=(
+    command
+    ranger
+    --cmd="map Q quitallcd $tempfile"
+  )
+  
+  ${ranger_cmd[@]} "$@"
+  local target_dir=$(cat -- "$tempfile" | tr -d ' ')
+  local cwd=$(echo -n `pwd` | tr -d ' ')
+  if [[ -f "$tempfile" ]] && [[ "$target_dir" != "" ]] && \
+      [[ "$target_dir" != "$cwd" ]]; then
+    cd -- "$target_dir"
+  fi
+  command rm -f -- "$tempfile" 2>/dev/null
+}
+
 # fix starship initial blank line
 # see https://www.reddit.com/r/commandline/comments/13r2ou3/comment/kvtv6lw/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 precmd() {
@@ -77,13 +99,8 @@ precmd() {
 
 # aliases
 alias w="cd ~/workspace"
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-case "$OSTYPE" in
-  darwin*)
-    # ...
-  ;;
-  linux*)
-    # ...
-  ;;
-esac
+# Created by `pipx` on 2025-05-29 15:38:28
+export PATH="$PATH:/Users/stefan/.local/bin"
+export RESTIC_REPOSITORY="sftp:backup_hetzner:/home/backups/fujin"

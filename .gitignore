@@ -1,0 +1,9 @@
+.dotfiles
+.DS_Store
+
+# Claude Code — ignore everything local, keep shared config
+*/.claude/*
+!*/.claude/settings.json
+!*/.claude/commands/
+!*/.claude/skills/
+!*/.claude/agents/

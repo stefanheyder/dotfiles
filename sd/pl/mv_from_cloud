@@ -19,8 +19,15 @@ fi
 cd "$(dirname "$0")"
 
 main() {
-    scp "$CLOUD/paperless consume/"*.pdf 192.168.178.26:/home/stefan/paperless-ngx/consume
-    mv "$CLOUD/paperless consume/"*.pdf "$CLOUD/paperless consume/processed/" 
+    timestamp=$(date +"%Y-%m-%d_%H%M")
+    
+    for file in "$ICLOUD/paperless consume/"*.pdf; do
+        [ -e "$file" ] || continue
+        filename=$(basename "$file" .pdf)
+        newname="${timestamp}_${filename}.pdf"
+        scp "$file" "192.168.178.26:/home/stefan/paperless-ngx/consume/${newname}"
+        mv "$file" "$ICLOUD/paperless consume/processed/${newname}"
+    done
 }
 
 main "$@"
