@@ -22,6 +22,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 eval "$(starship init zsh)"
+<<<<<<< Updated upstream
 
 # automatically activate venvs
 python_venv() {
@@ -97,10 +98,12 @@ precmd() {
   fi
 }
 
+export RESTIC_REPOSITORY="sftp:backup_hetzner:/home/backups/fujin"
 # aliases
 alias w="cd ~/workspace"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Created by `pipx` on 2025-05-29 15:38:28
-export PATH="$PATH:/Users/stefan/.local/bin"
-export RESTIC_REPOSITORY="sftp:backup_hetzner:/home/backups/fujin"
+export PATH="$PATH:$HOME/.local/bin"
+
+. "$HOME/.local/bin/env"
