@@ -2,8 +2,8 @@
 
 ```bash
 git init --bare $HOME/.dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/.dotfile/ --work-tree=$HOME'
-config config status.showUntrackedFiles no
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfile/ --work-tree=$HOME'
+dotfiles config status.showUntrackedFiles no
 ```
 
 # Installation
@@ -14,12 +14,12 @@ git clone --bare https://github.com/stefanheyder/dotfiles.git $HOME/.dotfiles
 
 Add  the following alias to your shells' configuration:
 ```bash
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ```
 
 and run 
 ```bash
-config config status.showUntrackedFiles no
+dotfiles config status.showUntrackedFiles no
 ```
 
 # Further reading
