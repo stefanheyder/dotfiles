@@ -22,7 +22,6 @@ source $ZSH/oh-my-zsh.sh
 
 
 eval "$(starship init zsh)"
-<<<<<<< Updated upstream
 
 # automatically activate venvs
 python_venv() {
