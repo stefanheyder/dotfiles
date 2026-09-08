@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "name": "dotfiles-agent",
+    "version": "0.1.0",
+    "description": "Claude Code working the dotfiles repo. PR-only: no $HOME writes, no live dotfile reads, token never enters the sandbox.",
+    "author": "Stefan Heyder"
+  },
+  "extends": "claude",
+  "workdir": {
+    "access": "readwrite"
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/workspace/work/dotfiles-agent"
+    ],
+    "deny": [
+      "$HOME/.dotfiles.git",
+      "$HOME/dotfiles",
+      "$HOME/.git-credentials",
+      "$HOME/.ssh",
+      "$HOME/Library/Keychains"
+    ]
+  },
+  "network": {
+    "custom_credentials": {
+      "forgejo": {
+        "upstream": "https://git.lan.stefanheyder.de",
+        "credential_key": "forgejo_dotfiles",
+        "inject_mode": "basic_auth"
+      }
+    },
+    "credentials": [
+      "forgejo"
+    ],
+    "network_profile": "minimal",
+    "allow_domain": [
+      "api.anthropic.com",
+      {
+        "domain": "git.lan.stefanheyder.de",
+        "endpoints": [
+          {
+            "method": "*",
+            "path": "/**"
+          }
+        ]
+      }
+    ]
+  },
+  "environment": {
+    "allow_vars": [
+      "PATH",
+      "HOME",
+      "TERM",
+      "SHELL",
+      "USER",
+      "TMPDIR",
+      "LANG",
+      "LC_*",
+      "SSL_CERT_FILE",
+      "SSL_CERT_DIR",
+      "CURL_CA_BUNDLE",
+      "GIT_SSL_CAINFO",
+      "NODE_EXTRA_CA_CERTS",
+      "REQUESTS_CA_BUNDLE",
+      "HTTP_PROXY",
+      "HTTPS_PROXY",
+      "ALL_PROXY",
+      "NO_PROXY",
+      "http_proxy",
+      "https_proxy",
+      "all_proxy",
+      "no_proxy",
+      "NONO_*",
+      "FORGEJO_*"
+    ]
+  },
+  "rollback": {
+    "exclude_globs": [
+      "*.tmp.*"
+    ],
+    "exclude_patterns": [
+      ".testhome"
+    ]
+  }
+}
