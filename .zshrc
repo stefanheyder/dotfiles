@@ -110,4 +110,3 @@ ccdot() {
 # Created by `pipx` on 2025-05-29 15:38:28
 export PATH="$PATH:$HOME/.local/bin"
 
-. "$HOME/.local/bin/env"
