@@ -22,7 +22,6 @@ source $ZSH/oh-my-zsh.sh
 
 
 eval "$(starship init zsh)"
-<<<<<<< Updated upstream
 
 # automatically activate venvs
 python_venv() {
@@ -102,6 +101,11 @@ export RESTIC_REPOSITORY="sftp:backup_hetzner:/home/backups/fujin"
 # aliases
 alias w="cd ~/workspace"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+# sandboxed dotfiles agent: claude confined to the dotfiles-agent nono profile
+ccdot() {
+  ( cd "$HOME/workspace/work/dotfiles-agent" && nono run --profile dotfiles-agent -- claude "$@" )
+}
 
 # Created by `pipx` on 2025-05-29 15:38:28
 export PATH="$PATH:$HOME/.local/bin"
