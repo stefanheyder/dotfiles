@@ -20,9 +20,6 @@ ZSH_THEME=""
 plugins=(git fzf)
 source $ZSH/oh-my-zsh.sh
 
-
-eval "$(starship init zsh)"
-
 # automatically activate venvs
 python_venv() {
   MYVENV=./venv
