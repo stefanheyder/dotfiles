@@ -97,6 +97,12 @@ precmd() {
   fi
 }
 
+# editor
+if (( $+commands[nvim] )); then
+  export EDITOR=nvim
+  export VISUAL=nvim
+fi
+
 export RESTIC_REPOSITORY="sftp:backup_hetzner:/home/backups/fujin"
 # aliases
 alias w="cd ~/workspace"
