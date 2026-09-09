@@ -32,7 +32,7 @@
     "credentials": [
       "forgejo"
     ],
-    "network_profile": "minimal",
+    "network_profile": "claude-code",
     "allow_domain": [
       "api.anthropic.com",
       {
