@@ -48,6 +48,10 @@ eval "$(starship init zsh)"
 # fzf
 source <(fzf --zsh)
 
+# terminal colours: repaint the 16 ANSI slots to gruvbox dark, so the shell
+# matches nvim's colorscheme. No-op in tmux and on non-ttys.
+source ~/.config/zsh/theme.zsh
+
 # platform dependent configurations
 case "$(uname -s)" in
   Darwin*) source ~/.config/zsh/macos.zsh ;;
